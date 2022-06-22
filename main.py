@@ -1,11 +1,13 @@
 import PySimpleGUI as sg
 from psgtray import SystemTray
 
-menu = ['GirlFriend Companion', ['Show', 'Hide', '---', 'Exit']]
+menu = ['GirlFriend Companion', ['Show', 'Hide', '---', 'Size', ['Big', 'Normal', 'Small'], '---', 'Exit']]
 
 layout = [
     [sg.Image(filename='assets/animated_girlfriend.gif', enable_events=True, background_color='white', key='girlfriend',
               right_click_menu=menu, pad=0)], ]
+
+# TODO: add default location based on taskbar location
 
 window = sg.Window('Girlfriend companion', layout,
                    no_titlebar=True,
@@ -28,6 +30,13 @@ while True:
         window.bring_to_front()
     elif event == 'Hide':
         window.hide()
+    # TODO: add size change
+    elif event == 'Big':
+        pass
+    elif event == 'Normal':
+        pass
+    elif event == 'Small':
+        pass
 
     window['girlfriend'].update_animation('assets/animated_girlfriend.gif', time_between_frames=40)
 
