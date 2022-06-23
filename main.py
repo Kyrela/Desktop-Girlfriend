@@ -1,7 +1,7 @@
 import PySimpleGUI as sg
 from psgtray import SystemTray
 
-menu = ['GirlFriend Companion', ['Show', 'Hide', '---', 'Size', ['Big', 'Normal', 'Small'], '---', 'Exit']]
+menu = ['Desktop Girlfriend', ['Show', 'Hide', '---', 'Size', ['Big', 'Normal', 'Small'], '---', 'Exit']]
 
 layout = [
     [sg.Image(filename='assets/animated_girlfriend.gif', enable_events=True, background_color='white', key='girlfriend',
@@ -9,7 +9,7 @@ layout = [
 
 # TODO: add default location based on taskbar location
 
-window = sg.Window('Girlfriend companion', layout,
+window = sg.Window('Desktop Girlfriend', layout,
                    no_titlebar=True,
                    keep_on_top=True,
                    background_color='white',
@@ -17,7 +17,7 @@ window = sg.Window('Girlfriend companion', layout,
                    alpha_channel=1,
                    margins=(0, 0))
 
-tray = SystemTray(menu, window=window, tooltip="Girlfriend companion", icon='assets/gf_icon.png')
+tray = SystemTray(menu, window=window, tooltip="Desktop Girlfriend", icon='assets/gf_icon.png')
 
 while True:
     event, values = window.read(timeout=1)

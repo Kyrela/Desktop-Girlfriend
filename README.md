@@ -1,4 +1,4 @@
-# ![Girlfriend Companion icon](assets/gf_icon.png) Girlfriend Companion
+# ![Desktop Girlfriend icon](assets/gf_icon.png) Desktop Girlfriend
 
 A simple and idle desktop companion representing the Friday Night Funkin's character 'Girlfriend'
 
@@ -22,4 +22,4 @@ python3 main.py
 
 ## Links
 
-- [Github](https://github.com/Kyrela/Girlfriend-Companion)
+- [Github](https://github.com/Kyrela/Desktop-Girlfriend)
