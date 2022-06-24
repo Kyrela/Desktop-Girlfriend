@@ -17,7 +17,7 @@ pip install -r requirements.txt
 Simply run the `main.py` script, using
 
 ```bash
-python3 main.py
+python3 desktop_goose.pyw
 ```
 
 ## Links
