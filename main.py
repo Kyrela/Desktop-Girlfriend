@@ -25,9 +25,15 @@ while True:
         event = values[event]
     if event in (sg.WIN_CLOSED, 'Exit', 'Cancel', sg.WIN_CLOSE_ATTEMPTED_EVENT):
         break
-    if event in ('Show', sg.EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED):
+    if event == 'Show':
         window.un_hide()
         window.bring_to_front()
+    if event == sg.EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED:
+        if window._Hidden:
+            window.un_hide()
+            window.bring_to_front()
+        else:
+            window.hide()
     elif event == 'Hide':
         window.hide()
     # TODO: add size change
