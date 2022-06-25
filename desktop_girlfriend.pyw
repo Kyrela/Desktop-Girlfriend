@@ -1,10 +1,24 @@
+"""
+Desktop Girlfriend
+--
+
+A simple and idle desktop companion representing the Friday Night Funkin's character 'Girlfriend'
+
+Copyright (c) 2022 Kyrela
+"""
+
 import PySimpleGUI as sg
 from psgtray import SystemTray
 
+from gif import Gif
+
 menu = ['Desktop Girlfriend', ['Show', 'Hide', '---', 'Size', ['Big', 'Normal', 'Small'], '---', 'Exit']]
 
+img = Gif('assets/animated_girlfriend.gif')
+img_data = img.to_bytes()
+
 layout = [
-    [sg.Image(filename='assets/animated_girlfriend.gif', enable_events=True, background_color='white', key='girlfriend',
+    [sg.Image(data=img_data, enable_events=True, background_color='white', key='girlfriend',
               right_click_menu=menu, pad=0)], ]
 
 # TODO: add default location based on taskbar location
@@ -44,7 +58,7 @@ while True:
     elif event == 'Small':
         pass
 
-    window['girlfriend'].update_animation('assets/animated_girlfriend.gif', time_between_frames=40)
+    window['girlfriend'].update_animation(img_data, time_between_frames=40)
 
 window.close()
 tray.close()
