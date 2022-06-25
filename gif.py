@@ -20,6 +20,7 @@ class Gif:
             raise ValueError('Not an animated gif')
         self.frames_count = self.base_image.n_frames
         self.loop = self.base_image.info['loop']
+        self.frames = self.get_frames()
 
     def get_frames(self) -> list[Image]:
         """
@@ -42,9 +43,9 @@ class Gif:
 
         :return: None
         """
-        frames = self.get_frames()
         for i in range(self.frames_count):
-            frames[i].save(os.path.join(path, f"{''.join(os.path.basename(self.path).split('.')[:-1])}_frame_{i}.png"))
+            self.frames[i].save(
+                os.path.join(path, f"{''.join(os.path.basename(self.path).split('.')[:-1])}_frame_{i}.png"))
 
     def save(self, path: str):
         """
@@ -53,8 +54,7 @@ class Gif:
         :param path: the path to save the gif as
         :return: None
         """
-        frames = self.get_frames()
-        frames[0].save(path, 'GIF', save_all=True, append_images=frames[1:], loop=self.loop, disposal=2)
+        self.frames[0].save(path, 'GIF', save_all=True, append_images=self.frames[1:], loop=self.loop, disposal=2)
 
     def to_bytes(self):
         """
@@ -62,9 +62,8 @@ class Gif:
 
         :return: the gif as bytes
         """
-        frames = self.get_frames()
         img_bytes = BytesIO()
-        frames[0].save(img_bytes, 'GIF', save_all=True, append_images=frames[1:], loop=self.loop, disposal=2)
+        self.frames[0].save(img_bytes, 'GIF', save_all=True, append_images=self.frames[1:], loop=self.loop, disposal=2)
         return img_bytes.getvalue()
 
 
