@@ -4,7 +4,7 @@ A simple and idle desktop companion representing the Friday Night Funkin's chara
 
 ## Requirements
 
-**Python 3.6 or above is required**
+**Python 3.10 or above is required**
 
 To install the dependencies, run the following command:
 

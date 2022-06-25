@@ -13,13 +13,13 @@ class Gif:
     A class to manage animated gifs using PIL
     """
 
-    def __init__(self, path: str):
-        self.path = path
-        self.base_image = Image.open(path)
+    def __init__(self, fp):
+        self.base_image = Image.open(fp)
         if not self.base_image.is_animated:
             raise ValueError('Not an animated gif')
         self.frames_count = self.base_image.n_frames
         self.loop = self.base_image.info['loop']
+        self.size = self.base_image.size
         self.frames = self.get_frames()
 
     def get_frames(self) -> list[Image]:
@@ -45,7 +45,7 @@ class Gif:
         """
         for i in range(self.frames_count):
             self.frames[i].save(
-                os.path.join(path, f"{''.join(os.path.basename(self.path).split('.')[:-1])}_frame_{i}.png"))
+                os.path.join(path, f"frame_{i}.png"))
 
     def save(self, path: str):
         """
@@ -56,7 +56,7 @@ class Gif:
         """
         self.frames[0].save(path, 'GIF', save_all=True, append_images=self.frames[1:], loop=self.loop, disposal=2)
 
-    def to_bytes(self):
+    def to_bytes(self) -> bytes:
         """
         Return the gif as bytes
 
@@ -65,6 +65,36 @@ class Gif:
         img_bytes = BytesIO()
         self.frames[0].save(img_bytes, 'GIF', save_all=True, append_images=self.frames[1:], loop=self.loop, disposal=2)
         return img_bytes.getvalue()
+
+    def resize(self, size: tuple | int):
+        """
+        Resize the gif
+
+        :param size: the new size
+        :return: self
+        """
+        if isinstance(size, int):
+            size = ((size * self.size[0]) // 100, (size * self.size[1]) // 100)
+        self.frames = [frame.resize(size) for frame in self.frames]
+        return self
+
+    def crop(self, box: tuple):
+        """
+        Crop the gif
+
+        :param box: the crop box
+        :return: self
+        """
+        self.frames = [frame.crop(box) for frame in self.frames]
+        return self
+
+    def copy(self):
+        """
+        Copy the gif
+
+        :return: a copy of the gif
+        """
+        return Gif(self.base_image)
 
 
 if __name__ == '__main__':
