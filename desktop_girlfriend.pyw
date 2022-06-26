@@ -30,6 +30,10 @@ layout = [
               right_click_menu=menu, pad=0)], ]
 
 # TODO: add default location based on taskbar location
+# FIXME: gf isn't always above the taskbar
+# TODO: add a snd gf with hair cropped and allow to switch between them
+# TODO: hide gf when entering fullscreen
+# TODO: save configuration on exit (size, position, mode)
 
 window = sg.Window('Desktop Girlfriend', layout,
                    no_titlebar=True,

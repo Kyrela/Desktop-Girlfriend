@@ -44,6 +44,7 @@ class Gif:
         """
         Save all the gif's frames as separate images
 
+        :param path: the path to save the frames as
         :return: None
         """
         for i in range(self.frames_count):
