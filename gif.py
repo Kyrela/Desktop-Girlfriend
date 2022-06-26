@@ -13,8 +13,11 @@ class Gif:
     A class to manage animated gifs using PIL
     """
 
-    def __init__(self, fp):
-        self.base_image = Image.open(fp)
+    def __init__(self, img: Image.Image | str):
+        if isinstance(img, Image.Image):
+            self.base_image = img
+        else:
+            self.base_image = Image.open(img)
         if not self.base_image.is_animated:
             raise ValueError('Not an animated gif')
         self.frames_count = self.base_image.n_frames

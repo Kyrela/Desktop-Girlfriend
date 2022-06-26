@@ -15,7 +15,15 @@ from gif import Gif
 menu = ['Desktop Girlfriend', ['Show', 'Hide', '---', 'Size', ['Big', 'Normal', 'Small'], '---', 'Exit']]
 
 img = Gif('assets/animated_girlfriend.gif')
-img_data = img.to_bytes()
+screen_size = sg.Window.get_screen_size()
+gf_size = img.size
+
+sizes = {
+    'Big': (gf_size[0] * (height := screen_size[1] // 3) // gf_size[1], height),
+    'Normal': (gf_size[0] * (height := screen_size[1] // 5) // gf_size[1], height),
+    'Small': (gf_size[0] * (height := screen_size[1] // 7) // gf_size[1], height)
+}
+img_data = img.copy().resize(sizes['Normal']).to_bytes()
 
 layout = [
     [sg.Image(data=img_data, enable_events=True, background_color='white', key='girlfriend',
@@ -51,12 +59,8 @@ while True:
     elif event == 'Hide':
         window.hide()
     # TODO: add size change
-    elif event == 'Big':
-        pass
-    elif event == 'Normal':
-        pass
-    elif event == 'Small':
-        pass
+    elif event in ('Big', 'Normal', 'Small'):
+        img_data = img.copy().resize(sizes[event]).to_bytes()
 
     window['girlfriend'].update_animation(img_data, time_between_frames=40)
 
