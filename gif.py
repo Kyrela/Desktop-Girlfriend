@@ -80,6 +80,7 @@ class Gif:
         if isinstance(size, int):
             size = ((size * self.size[0]) // 100, (size * self.size[1]) // 100)
         self.frames = [frame.resize(size) for frame in self.frames]
+        self.size = size
         return self
 
     def crop(self, box: tuple):

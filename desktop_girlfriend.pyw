@@ -35,13 +35,30 @@ layout = [
 # TODO: hide gf when entering fullscreen
 # TODO: save configuration on exit (size, position, mode)
 
-window = sg.Window('Desktop Girlfriend', layout,
-                   no_titlebar=True,
-                   keep_on_top=True,
-                   background_color='white',
-                   transparent_color='white',
-                   alpha_channel=1,
-                   margins=(0, 0))
+
+def get_relative_location(window_size: tuple[int, int]) -> tuple[int, int]:
+    """
+    Returns the location where the window should be placed relative to the screen
+    :param window_size: the size of the window
+    :return: the location
+    """
+    screen_size = sg.Window.get_screen_size()
+    return (
+        (screen_size[0] // 8 * 7 - window_size[0]),
+        (screen_size[1] - window_size[1] - 32 + (window_size[1] * 116 // 423))
+    )
+
+
+window = sg.Window(
+    'Desktop Girlfriend', layout,
+    no_titlebar=True,
+    keep_on_top=True,
+    background_color='white',
+    transparent_color='white',
+    alpha_channel=1,
+    margins=(0, 0),
+    location=get_relative_location(sizes['Normal']),
+    )
 
 tray = SystemTray(menu, window=window, tooltip="Desktop Girlfriend", icon='assets/gf_icon.png')
 
@@ -62,9 +79,9 @@ while True:
             window.hide()
     elif event == 'Hide':
         window.hide()
-    # TODO: add size change
     elif event in ('Big', 'Normal', 'Small'):
         img_data = img.copy().resize(sizes[event]).to_bytes()
+        window.move(*get_relative_location(sizes[event]))
 
     window['girlfriend'].update_animation(img_data, time_between_frames=40)
 
